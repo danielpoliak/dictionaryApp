@@ -4,13 +4,17 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import DictionarySelect from '../common/DictionarySelect';
 import DictionaryInput from '../common/DictionaryInput';
+import {
+	getObjValueFromArrByProperty,
+	getPageSizeRoundToFive
+} from '../../utils';
 
 const DictionariesOverview = () => {
-	const [dictionaryItemDomain, setdictionaryItemDomain] = useState('');
-	const [dictionaryItemRange, setdictionaryItemRange] = useState('');
+	const [domain, setDomain] = useState('');
+	const [range, setRange] = useState('');
 	const [globalState, globalActions] = useGlobal();
 
-	const { dictionaries, dictionarySelected } = globalState;
+	const { dictionaries, dictionarySelectedName } = globalState;
 	const { selectDictionary } = globalActions.dictionaries;
 	const {
 		removeDictionaryItem,
@@ -41,53 +45,65 @@ const DictionariesOverview = () => {
 				<i
 					className="fa fa-trash"
 					onClick={e => removeDictionaryItem(cellDictionaryItem)}
-				>
-					Trash
-				</i>
+				></i>
 				<i
 					className="fa fa-trash"
 					onClick={e => editDictionaryItem(cellDictionaryItem)}
-				>
-					Edit
-				</i>
+				></i>
 			</div>
 		);
+	};
+
+	const handleOnKeyPress = e => {
+		if (e.which === 13) {
+			addNewDictionaryItem();
+		}
 	};
 
 	const editDictionaryItem = cellDictionaryName => {
 		console.log('edit', cellDictionaryName);
 	};
+
 	const addNewDictionaryItem = () => {
-		addDictionaryItem(
-			dictionaryItemDomain,
-			dictionaryItemRange,
-			dictionarySelected
-		);
+		if (!domain || !range) return;
+		setDomain('');
+		setRange('');
+		addDictionaryItem({ domain, range });
 	};
+
+	const dictionaryItems = getObjValueFromArrByProperty(
+		dictionaries,
+		'name',
+		dictionarySelectedName,
+		'items'
+	);
+	const pageSize = getPageSizeRoundToFive(dictionaryItems.length);
 
 	return (
 		<div>
 			<DictionarySelect
-				dictionarySelected={dictionarySelected}
+				dictionarySelected={dictionarySelectedName}
 				onChangeSelect={selectDictionary}
 				dictionaries={dictionaries}
 			/>
 			<ReactTable
-				data={dictionaries.map(({ items }) => items)}
+				data={dictionaryItems}
 				className={'cell-center-vertical -striped -highlight'}
 				columns={dictionariesTableColumns}
 				filterable
-				pageSize={Math.ceil(dictionaries.length / 5) * 5}
+				pageSize={pageSize}
 			/>
 			<DictionaryInput
-				value={dictionaryItemDomain}
+				value={domain}
 				placeholder="Domain"
-				onChange={setdictionaryItemDomain}
+				onKeyEnterPress={handleOnKeyPress}
+				onChange={setDomain}
 			/>
 			<DictionaryInput
-				value={dictionaryItemRange}
+				value={range}
 				placeholder="Range"
-				onChange={setdictionaryItemRange}
+				onChange={setRange}
+				onKeyPress={handleOnKeyPress}
 			/>
 			<div className="wrapper-block right">
 				<button

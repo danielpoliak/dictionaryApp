@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DictionaryInput = props => {
-	const { value, onChange, placeholder } = props;
+	const { value, onChange, placeholder, onKeyPress } = props;
 
 	return (
 		<div className="input-controls">
@@ -9,6 +9,7 @@ const DictionaryInput = props => {
 				type="text"
 				className="form-control"
 				value={value}
+				onKeyPress={onKeyPress}
 				placeholder={placeholder}
 				onChange={e => onChange(e.target.value)}
 			/>

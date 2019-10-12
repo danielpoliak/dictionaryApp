@@ -1,23 +1,21 @@
-import setDictionaries from './common';
+import { setDictionaries } from './common';
+import { addItemToArray, removeItemFromArray } from '../utils';
 
-export const addDictionaryItem = (store, domain, range, dictionarySelected) => {
-	const { dictionaries } = store.state;
-
+const updateDictionariesWithItem = (store, dictionaryItem, arrMethod) => {
+	const { dictionaries, dictionarySelectedName } = store.state;
+	if (!dictionarySelectedName) return;
 	const newDictionaries = dictionaries.map(({ name, items }) =>
-		name === dictionarySelected
-			? { name, items: items.push({ domain, range }) }
+		name === dictionarySelectedName
+			? { name, items: arrMethod(items, dictionaryItem) }
 			: { name, items }
 	);
-
 	setDictionaries(store, newDictionaries);
 };
 
-export const removeDictionaryItem = (store, dictionaryName) => {
-	const newDictionaries = store.state.dictionaries.filter(
-		({ name }) => dictionaryName !== name
-	);
-	setDictionaries(store, newDictionaries);
+export const addDictionaryItem = (store, dictionaryItem) => {
+	updateDictionariesWithItem(store, dictionaryItem, addItemToArray);
 };
 
-// export const selectDictionary = (store, dictionaryName) =>
-// 	store.setState({ dictionarySelected: dictionaryName });
+export const removeDictionaryItem = (store, dictionaryItem) => {
+	updateDictionariesWithItem(store, dictionaryItem, removeItemFromArray);
+};

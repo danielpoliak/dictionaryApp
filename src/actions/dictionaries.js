@@ -1,10 +1,10 @@
-import setDictionaries from './common';
+import { setDictionaries } from './common';
 
 export const addDictionary = (store, dictionaryName) => {
-	console.log(dictionaryName, ' ===addDictionary');
+	const { dictionaries } = store.state;
 
 	const newDictionaries = [
-		...store.state.dictionaries,
+		...dictionaries,
 		{
 			name: dictionaryName,
 			items: []
@@ -13,17 +13,21 @@ export const addDictionary = (store, dictionaryName) => {
 	setDictionaries(store, newDictionaries);
 };
 
-// TODO PUT
-// window.localStorage.setItem('dictionaries', JSON.stringify(newDictionaries));
-// store.setState({ dictionaries: newDictionaries });
-// in module
-
 export const removeDictionary = (store, dictionaryName) => {
-	const newDictionaries = store.state.dictionaries.filter(
+	const { dictionaries } = store.state;
+
+	const newDictionaries = dictionaries.filter(
 		({ name }) => dictionaryName !== name
 	);
 	setDictionaries(store, newDictionaries);
 };
 
-export const selectDictionary = (store, dictionaryName) =>
-	store.setState({ dictionarySelected: dictionaryName });
+export const selectDictionary = (store, dictionaryName) => {
+	const { dictionaries } = store.state;
+
+	const dictionarySelected = dictionaries.find(
+		({ name }) => name === dictionaryName
+	);
+
+	store.setState({ dictionarySelectedName: dictionarySelected.name });
+};
