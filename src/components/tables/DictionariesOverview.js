@@ -66,12 +66,11 @@ const DictionariesOverview = () => {
 		const isDuplicate = !!findDuplicateDictionary(dictionaries, dictionaryName);
 		// TODO show some kind of error message for duplicate name
 		if (isDuplicate) {
-			setDictionaryName('');
 			return;
 		} else {
-			setDictionaryName('');
 			addDictionary(dictionaryName);
 		}
+		setDictionaryName('');
 	};
 	const pageSize = getPageSizeRoundToFive(dictionaries.length);
 

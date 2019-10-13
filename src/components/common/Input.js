@@ -1,7 +1,14 @@
 import React from 'react';
 
 const Input = props => {
-	const { value, onChange, placeholder, onKeyPress } = props;
+	const {
+		value,
+		onChange,
+		placeholder,
+		onKeyPress,
+		isError,
+		erroMessage
+	} = props;
 
 	return (
 		<div className="input-controls">

@@ -15,20 +15,14 @@ export const editDictItemInArray = (arr, item, index) =>
 
 export const addDictItemToArray = (arr, item) => [...arr, item];
 
-export const getObjValueFromArrByProperty = (
+export const getDictionaryItemsFromDictionaryArr = (
 	arr,
-	propertyKey,
-	propertyValue,
-	targetKey
+	dictionarySelectedName
 ) => {
-	const objSelected = arr.find(obj => obj[propertyKey] === propertyValue);
-
-	return objSelected ? objSelected[targetKey] : [];
+	const dictionarySelected = arr.find(
+		({ name }) => name === dictionarySelectedName
+	);
+	return dictionarySelected ? dictionarySelected.items : [];
 };
 
 export const getPageSizeRoundToFive = size => Math.ceil(size / 5) * 5;
-
-// export const validateDictionaryItems = dictionaryItem => {
-// 	const { domain, range } = dictionaryItem;
-// 	if()
-// };

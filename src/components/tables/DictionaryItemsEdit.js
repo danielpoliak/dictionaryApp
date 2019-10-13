@@ -7,7 +7,7 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import withErrorHandler from '../common/ErrorHandler';
 import {
-	getObjValueFromArrByProperty,
+	getDictionaryItemsFromDictionaryArr,
 	getPageSizeRoundToFive
 } from '../../utils';
 
@@ -18,7 +18,7 @@ const DictionariesItemsEdit = () => {
 	const [dictionaryItems, setDictionaryItems] = useState([]);
 
 	useEffect(() => {
-		const dictionaryItems = getObjValueFromArrByProperty(
+		const dictionaryItems = getDictionaryItemsFromDictionaryArr(
 			dictionaries,
 			'name',
 			dictionarySelectedName,
