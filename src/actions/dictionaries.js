@@ -28,6 +28,8 @@ export const selectDictionary = (store, dictionaryName) => {
 	const dictionarySelected = dictionaries.find(
 		({ name }) => name === dictionaryName
 	);
+	console.log(dictionaryName, ' ===== dictionaryName');
+	if (!dictionarySelected) return;
 
-	store.setState({ dictionarySelectedName: dictionarySelected.name });
+	store.setState({ dictionarySelectedName: dictionaryName });
 };

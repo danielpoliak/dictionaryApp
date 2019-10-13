@@ -3,14 +3,20 @@ import useGlobal from '../../store';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import { findDuplicateDictionary, getPageSizeRoundToFive } from '../../utils';
-import DictionaryInput from '../common/DictionaryInput';
+import Input from '../common/Input';
+import Button from '../common/Button';
+import withErrorHandler from '../common/ErrorHandler';
 
 const DictionariesOverview = () => {
 	const [dictionaryName, setDictionaryName] = useState('');
 	const [globalState, globalActions] = useGlobal();
 
 	const { dictionaries } = globalState;
-	const { removeDictionary, addDictionary } = globalActions.dictionaries;
+	const {
+		removeDictionary,
+		addDictionary,
+		selectDictionary
+	} = globalActions.dictionaries;
 
 	const dictionariesTableColumns = [
 		{
@@ -39,14 +45,15 @@ const DictionariesOverview = () => {
 				></i>
 				<i
 					className="far fa-edit"
-					onClick={e => editDictionary(cellDictionaryName)}
+					onClick={e => setToEditDictionary(cellDictionaryName)}
 				></i>
 			</div>
 		);
 	};
 
-	const editDictionary = cellDictionaryName => {
-		console.log('edit', cellDictionaryName);
+	const setToEditDictionary = cellDictionaryName => {
+		globalActions.common.setSubview(1);
+		selectDictionary(cellDictionaryName);
 	};
 
 	const handleOnKeyPress = e => {
@@ -67,7 +74,6 @@ const DictionariesOverview = () => {
 		}
 	};
 	const pageSize = getPageSizeRoundToFive(dictionaries.length);
-	console.log(pageSize, ' =page sze');
 
 	return (
 		<div>
@@ -78,23 +84,15 @@ const DictionariesOverview = () => {
 				filterable
 				pageSize={pageSize}
 			/>
-			<DictionaryInput
+			<Input
 				value={dictionaryName}
 				placeholder="Name"
 				onKeyPress={handleOnKeyPress}
 				onChange={setDictionaryName}
 			/>
-			<div className="wrapper-block right">
-				<button
-					type="button"
-					className="btn btn-primary"
-					onClick={addNewDictionary}
-				>
-					Add
-				</button>
-			</div>
+			<Button title="Add" onClick={addNewDictionary} />
 		</div>
 	);
 };
 
-export default DictionariesOverview;
+export default withErrorHandler(DictionariesOverview);

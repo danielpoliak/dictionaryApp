@@ -1,7 +1,7 @@
 import React from 'react';
 
-const DictionarySelect = props => {
-	const { onChangeSelect, dictionarySelectedName, dictionaries } = props;
+const Select = props => {
+	const { onChangeSelect, dictionarySelected, dictionaries } = props;
 
 	const renderOptions = () => {
 		const optionsArray = dictionaries.map(({ name }, index) => (
@@ -12,14 +12,13 @@ const DictionarySelect = props => {
 
 		return optionsArray;
 	};
-
 	const onDictionarySelectChange = e => onChangeSelect(e.target.value);
 
 	return (
-		<select value={dictionarySelectedName} onChange={onDictionarySelectChange}>
+		<select value={dictionarySelected} onChange={onDictionarySelectChange}>
 			{renderOptions()}
 		</select>
 	);
 };
 
-export default DictionarySelect;
+export default Select;

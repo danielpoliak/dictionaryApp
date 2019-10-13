@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DictionaryInput = props => {
+const Input = props => {
 	const { value, onChange, placeholder, onKeyPress } = props;
 
 	return (
@@ -17,4 +17,4 @@ const DictionaryInput = props => {
 	);
 };
 
-export default DictionaryInput;
+export default Input;

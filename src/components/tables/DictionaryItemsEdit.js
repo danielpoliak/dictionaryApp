@@ -1,35 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useGlobal from '../../store';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import DictionarySelect from '../common/DictionarySelect';
-import DictionaryInput from '../common/DictionaryInput';
+import Select from '../common/Select';
+import Input from '../common/Input';
+import Button from '../common/Button';
+import withErrorHandler from '../common/ErrorHandler';
 import {
 	getObjValueFromArrByProperty,
 	getPageSizeRoundToFive
 } from '../../utils';
 
-const DictionariesOverview = () => {
+const DictionariesItemsEdit = () => {
+	const [globalState, globalActions] = useGlobal();
+	const { dictionaries, dictionarySelectedName } = globalState;
+	const [dataUpdates, setDataUpdates] = useState([]);
+	const [dictionaryItems, setDictionaryItems] = useState([]);
+
+	useEffect(() => {
+		const dictionaryItems = getObjValueFromArrByProperty(
+			dictionaries,
+			'name',
+			dictionarySelectedName,
+			'items'
+		);
+		setDataUpdates(dictionaryItems);
+		setDictionaryItems(dictionaryItems);
+	}, [dictionaries, dictionarySelectedName]);
+
 	const [domain, setDomain] = useState('');
 	const [range, setRange] = useState('');
-	const [globalState, globalActions] = useGlobal();
 
-	const { dictionaries, dictionarySelectedName } = globalState;
 	const { selectDictionary } = globalActions.dictionaries;
 	const {
 		removeDictionaryItem,
-		addDictionaryItem
+		addDictionaryItem,
+		editDictionaryItem
 	} = globalActions.dictionaryItem;
 
 	const dictionariesTableColumns = [
 		{
 			Header: 'Domain',
-			accessor: 'domain'
+			accessor: 'domain',
+			Cell: cell => dictionaryItemCell(cell)
 		},
 		{
 			Header: 'Range',
 			accessor: 'range',
-			filterable: false
+			Cell: cell => dictionaryItemCell(cell)
 		},
 		{
 			Header: 'Actions',
@@ -38,18 +56,53 @@ const DictionariesOverview = () => {
 		}
 	];
 
+	const onDictionaryItemChange = (cell, value, isDiscard) => {
+		const cellIndex = cell.index;
+		const newDataUpdates = [...dataUpdates];
+		const newDataUpdatesCell = isDiscard
+			? dictionaryItems[cellIndex]
+			: {
+					...dataUpdates[cellIndex],
+					[cell.column.id]: value,
+					isUpdated: true
+			  };
+
+		newDataUpdates[cellIndex] = newDataUpdatesCell;
+		setDataUpdates(newDataUpdates);
+	};
+
+	const dictionaryItemCell = cell => {
+		const columnId = cell.column.id;
+		const value = dataUpdates[cell.index] && dataUpdates[cell.index][columnId];
+		const placeholder = cell.original[columnId];
+		return (
+			<Input
+				value={value}
+				placeholder={placeholder}
+				onKeyEnterPress={handleOnKeyPress}
+				onChange={value => onDictionaryItemChange(cell, value)}
+			/>
+		);
+	};
+
 	const createActionsCell = cell => {
-		const cellDictionaryItem = cell.original && cell.original;
+		const cellItem = dataUpdates[cell.index];
+		// const isUdated = cellItem.isUpdated;
 		return (
 			<div>
 				<i
 					className="fa fa-trash"
-					onClick={e => removeDictionaryItem(cellDictionaryItem)}
-				></i>
+					onClick={e => removeDictionaryItem(cellItem)}
+				/>
+				{/* TODO add shadow style when !isUpdated else active black style */}
 				<i
-					className="fa fa-trash"
-					onClick={e => editDictionaryItem(cellDictionaryItem)}
-				></i>
+					className="fa fa-undo"
+					onClick={e => onDictionaryItemChange(cell, '', true)}
+				/>
+				<i
+					className="fa fa-check"
+					onClick={e => editDictionaryItem(cellItem, cell.index)}
+				/>
 			</div>
 		);
 	};
@@ -60,10 +113,6 @@ const DictionariesOverview = () => {
 		}
 	};
 
-	const editDictionaryItem = cellDictionaryName => {
-		console.log('edit', cellDictionaryName);
-	};
-
 	const addNewDictionaryItem = () => {
 		if (!domain || !range) return;
 		setDomain('');
@@ -71,51 +120,36 @@ const DictionariesOverview = () => {
 		addDictionaryItem({ domain, range });
 	};
 
-	const dictionaryItems = getObjValueFromArrByProperty(
-		dictionaries,
-		'name',
-		dictionarySelectedName,
-		'items'
-	);
-	const pageSize = getPageSizeRoundToFive(dictionaryItems.length);
-
+	const pageSize = getPageSizeRoundToFive(dataUpdates.length);
 	return (
 		<div>
-			<DictionarySelect
+			<Select
 				dictionarySelected={dictionarySelectedName}
 				onChangeSelect={selectDictionary}
 				dictionaries={dictionaries}
 			/>
 			<ReactTable
-				data={dictionaryItems}
+				data={dataUpdates}
 				className={'cell-center-vertical -striped -highlight'}
 				columns={dictionariesTableColumns}
 				filterable
 				pageSize={pageSize}
 			/>
-			<DictionaryInput
+			<Input
 				value={domain}
 				placeholder="Domain"
 				onKeyEnterPress={handleOnKeyPress}
 				onChange={setDomain}
 			/>
-			<DictionaryInput
+			<Input
 				value={range}
 				placeholder="Range"
 				onChange={setRange}
 				onKeyPress={handleOnKeyPress}
 			/>
-			<div className="wrapper-block right">
-				<button
-					type="button"
-					className="btn btn-primary"
-					onClick={addNewDictionaryItem}
-				>
-					Add
-				</button>
-			</div>
+			<Button title="Add" onClick={addNewDictionaryItem} />
 		</div>
 	);
 };
 
-export default DictionariesOverview;
+export default withErrorHandler(DictionariesItemsEdit);

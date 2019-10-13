@@ -4,9 +4,8 @@ import * as actions from '../actions';
 
 const dictionaries = JSON.parse(localStorage.getItem('dictionaries') || '[]');
 
-console.log(dictionaries, '==== dictionaries initials');
-
 const initialState = {
+	subviewSelected: 0,
 	dictionaries,
 	dictionarySelectedName: dictionaries.length ? dictionaries[0].name : ''
 };

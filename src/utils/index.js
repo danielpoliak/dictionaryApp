@@ -5,12 +5,18 @@ export const findDuplicateDictionary = (dictionaries, dictionaryName) => {
 	return duplicateDictionary;
 };
 
-export const removeItemFromArray = (arr, item) =>
+export const removeDictItemFromArray = (arr, item) =>
 	arr.filter(
 		({ domain, range }) => item.domain !== domain && item.range !== range
 	);
 
-export const addItemToArray = (arr, item) => [...arr, item];
+export const editDictItemInArray = (arr, item, index) =>
+	arr.map((originalObj, objIndex) => (index === objIndex ? item : originalObj));
+
+export const addDictItemToArray = (arr, { range, domain }) => [
+	...arr,
+	{ range, domain }
+];
 
 export const getObjValueFromArrByProperty = (
 	arr,
