@@ -81,5 +81,3 @@ it('Get Dictionary items from dictionary array', () => {
 
 	expect(dictItemsByDictNameArr).toEqual(itemSelectedMocked);
 });
-
-// export const getPageSizeRoundToFive = size => Math.ceil(size / 5) * 5;

@@ -5,11 +5,11 @@ const Input = props => {
 		value,
 		onChange,
 		placeholder,
-		onKeyPress,
-		isError,
-		erroMessage
+		onKeyPress
+		// isError,
+		// erroMessage
 	} = props;
-
+	// TODO erorrstyle message
 	return (
 		<div className="input-controls">
 			<input
