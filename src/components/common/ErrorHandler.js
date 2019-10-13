@@ -16,8 +16,6 @@ const withErrorHandler = WrappedComponent =>
 
 		render() {
 			const { error, errorInfo } = this.state;
-			console.log(error, ' ======is error');
-
 			return (
 				<React.Fragment>
 					{!error ? (
