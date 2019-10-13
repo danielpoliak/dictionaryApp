@@ -2,7 +2,8 @@ import { setDictionaries } from './common';
 import {
 	addDictItemToArray,
 	removeDictItemFromArray,
-	editDictItemInArray
+	editDictItemInArray,
+	validateDictionaryItems
 } from '../utils';
 
 const updateDictionariesWithItem = (
@@ -13,11 +14,23 @@ const updateDictionariesWithItem = (
 ) => {
 	const { dictionaries, dictionarySelectedName } = store.state;
 	if (!dictionarySelectedName) return;
-	const newDictionaries = dictionaries.map(({ name, items }) =>
-		name === dictionarySelectedName
-			? { name, items: arrMethod(items, dictionaryItem, index) }
-			: { name, items }
+
+	const dictionaryIndex = dictionaries.findIndex(
+		dictionary => dictionary.name === dictionarySelectedName
 	);
+	const { name, items } = dictionaries[dictionaryIndex];
+
+	const dictionaryItems = arrMethod(items, dictionaryItem, index);
+	// const dictionaryItemsValidated = validateDictionaryItems(dictionaryItem);
+
+	const dictionaryNew = {
+		name,
+		items: dictionaryItems
+	};
+
+	const newDictionaries = [...dictionaries];
+	newDictionaries[dictionaryIndex] = dictionaryNew;
+
 	setDictionaries(store, newDictionaries);
 };
 

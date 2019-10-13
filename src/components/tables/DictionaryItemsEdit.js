@@ -53,6 +53,11 @@ const DictionariesItemsEdit = () => {
 			Header: 'Actions',
 			filterable: false,
 			Cell: cell => createActionsCell(cell)
+		},
+		{
+			Header: 'Validations',
+			filterable: false
+			// Cell: cell => createActionsCell(cell)
 		}
 	];
 

@@ -13,10 +13,7 @@ export const removeDictItemFromArray = (arr, item) =>
 export const editDictItemInArray = (arr, item, index) =>
 	arr.map((originalObj, objIndex) => (index === objIndex ? item : originalObj));
 
-export const addDictItemToArray = (arr, { range, domain }) => [
-	...arr,
-	{ range, domain }
-];
+export const addDictItemToArray = (arr, item) => [...arr, item];
 
 export const getObjValueFromArrByProperty = (
 	arr,
@@ -30,3 +27,8 @@ export const getObjValueFromArrByProperty = (
 };
 
 export const getPageSizeRoundToFive = size => Math.ceil(size / 5) * 5;
+
+// export const validateDictionaryItems = dictionaryItem => {
+// 	const { domain, range } = dictionaryItem;
+// 	if()
+// };

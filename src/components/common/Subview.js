@@ -6,7 +6,7 @@ const Subview = () => {
 	const [globalState, globalActions] = useGlobal();
 
 	return (
-		<div>
+		<div className="Subview">
 			{enums.subviews.map((subview, index) => (
 				<p key={index} onClick={e => globalActions.common.setSubview(index)}>
 					{subview}

@@ -44,7 +44,7 @@ const DictionariesOverview = () => {
 					onClick={e => removeDictionary(cellDictionaryName)}
 				></i>
 				<i
-					className="far fa-edit"
+					className="fa fa-edit"
 					onClick={e => setToEditDictionary(cellDictionaryName)}
 				></i>
 			</div>
