@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import useGlobal from '../../store';
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
-import { findDuplicateDictionary, getPageSizeRoundToFive } from '../../utils';
-import Input from '../common/Input';
-import Button from '../common/Button';
+import { findDuplicateDictionary } from '../../utils';
+import DictionaryTable from '../common/DictionaryTable';
 import withErrorHandler from '../common/ErrorHandler';
 
 const DictionariesOverview = () => {
@@ -74,26 +71,18 @@ const DictionariesOverview = () => {
 		}
 		setDictionaryName('');
 	};
-	const pageSize = getPageSizeRoundToFive(dictionaries.length);
 
 	return (
 		<div>
-			<ReactTable
+			<DictionaryTable
 				data={dictionaries}
-				className={'cell-center-vertical -striped -highlight'}
 				columns={dictionariesTableColumns}
-				filterable
-				pageSize={pageSize}
+				inputFirstValue={dictionaryName}
+				inputFirstPlaceholder={'Name'}
+				inputFirstHandleOnKeyPress={handleOnKeyPress}
+				inputFirstOnChange={setDictionaryName}
+				btnOnClick={addNewDictionary}
 			/>
-			<div className="form-bottom">
-				<Input
-					value={dictionaryName}
-					placeholder="Name"
-					onKeyPress={handleOnKeyPress}
-					onChange={setDictionaryName}
-				/>
-				<Button title="Add" onClick={addNewDictionary} />
-			</div>
 		</div>
 	);
 };

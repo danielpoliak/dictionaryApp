@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import useGlobal from '../../store';
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 import Select from '../common/Select';
 import Input from '../common/Input';
-import Button from '../common/Button';
+import DictionaryTable from '../common/DictionaryTable';
 import withErrorHandler from '../common/ErrorHandler';
-import {
-	getDictionaryItemsFromDictionaryArr,
-	getPageSizeRoundToFive
-} from '../../utils';
+import { getDictionaryItemsFromDictionaryArr } from '../../utils';
 
 const DictionariesItemsEdit = () => {
 	const [globalState, globalActions] = useGlobal();
@@ -131,8 +126,6 @@ const DictionariesItemsEdit = () => {
 		setRange('');
 		addDictionaryItem({ domain, range });
 	};
-
-	const pageSize = getPageSizeRoundToFive(dataUpdates.length);
 	return (
 		<div>
 			<Select
@@ -140,28 +133,19 @@ const DictionariesItemsEdit = () => {
 				onChangeSelect={selectDictionary}
 				dictionaries={dictionaries}
 			/>
-			<ReactTable
+			<DictionaryTable
 				data={dataUpdates}
-				className={'cell-center-vertical -striped -highlight'}
 				columns={dictionariesTableColumns}
-				filterable
-				pageSize={pageSize}
+				inputFirstValue={domain}
+				inputFirstPlaceholder={'Domain'}
+				inputFirstHandleOnKeyPress={handleOnKeyPress}
+				inputFirstOnChange={setDomain}
+				btnOnClick={addNewDictionaryItem}
+				inputSecondValue={range}
+				inputSecondPlaceholder={'Range'}
+				inputSecondHandleOnKeyPress={handleOnKeyPress}
+				inputSecondOnChange={setRange}
 			/>
-			<div className="form-bottom">
-				<Input
-					value={domain}
-					placeholder="Domain"
-					onKeyEnterPress={handleOnKeyPress}
-					onChange={setDomain}
-				/>
-				<Input
-					value={range}
-					placeholder="Range"
-					onChange={setRange}
-					onKeyPress={handleOnKeyPress}
-				/>
-				<Button title="Add" onClick={addNewDictionaryItem} />
-			</div>
 		</div>
 	);
 };
