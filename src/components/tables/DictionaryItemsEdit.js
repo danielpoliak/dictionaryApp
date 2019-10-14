@@ -60,8 +60,6 @@ const DictionariesItemsEdit = () => {
 	];
 
 	const onDictionaryItemChange = (cell, value, isDiscard) => {
-		console.log('on change hould not appear, siabed');
-
 		const cellIndex = cell.index;
 		const newDataUpdates = [...dataUpdates];
 		const newDataUpdatesCell = isDiscard
@@ -90,7 +88,11 @@ const DictionariesItemsEdit = () => {
 		);
 	};
 
-	const validationsCell = cell => dataUpdates[cell.index][cell.column.id];
+	const validationsCell = cell => {
+		const validation =
+			dataUpdates[cell.index] && dataUpdates[cell.index][cell.column.id];
+		return <div className={`validation ${validation}`}>{validation}</div>;
+	};
 
 	const createActionsCell = cell => {
 		const cellItem = dataUpdates[cell.index];
@@ -145,19 +147,21 @@ const DictionariesItemsEdit = () => {
 				filterable
 				pageSize={pageSize}
 			/>
-			<Input
-				value={domain}
-				placeholder="Domain"
-				onKeyEnterPress={handleOnKeyPress}
-				onChange={setDomain}
-			/>
-			<Input
-				value={range}
-				placeholder="Range"
-				onChange={setRange}
-				onKeyPress={handleOnKeyPress}
-			/>
-			<Button title="Add" onClick={addNewDictionaryItem} />
+			<div className="form-bottom">
+				<Input
+					value={domain}
+					placeholder="Domain"
+					onKeyEnterPress={handleOnKeyPress}
+					onChange={setDomain}
+				/>
+				<Input
+					value={range}
+					placeholder="Range"
+					onChange={setRange}
+					onKeyPress={handleOnKeyPress}
+				/>
+				<Button title="Add" onClick={addNewDictionaryItem} />
+			</div>
 		</div>
 	);
 };

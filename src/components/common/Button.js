@@ -4,11 +4,9 @@ const Button = props => {
 	const { onClick, title } = props;
 
 	return (
-		<div className="wrapper-block right">
-			<button type="button" className="btn btn-primary" onClick={onClick}>
-				{title}
-			</button>
-		</div>
+		<button type="button" className="btn" onClick={onClick}>
+			{title}
+		</button>
 	);
 };
 

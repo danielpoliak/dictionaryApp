@@ -85,13 +85,15 @@ const DictionariesOverview = () => {
 				filterable
 				pageSize={pageSize}
 			/>
-			<Input
-				value={dictionaryName}
-				placeholder="Name"
-				onKeyPress={handleOnKeyPress}
-				onChange={setDictionaryName}
-			/>
-			<Button title="Add" onClick={addNewDictionary} />
+			<div className="form-bottom">
+				<Input
+					value={dictionaryName}
+					placeholder="Name"
+					onKeyPress={handleOnKeyPress}
+					onChange={setDictionaryName}
+				/>
+				<Button title="Add" onClick={addNewDictionary} />
+			</div>
 		</div>
 	);
 };

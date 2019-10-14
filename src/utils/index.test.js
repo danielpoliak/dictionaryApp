@@ -86,3 +86,9 @@ it('Get Dictionary items from dictionary array', () => {
 
 	expect(dictItemsByDictNameArr).toEqual(itemSelectedMocked);
 });
+
+it('Find dictionary index by dictionary name', () => {
+	const dictIndex = utils.findDictIndexByName(dictionariesMocked, 'name2');
+
+	expect(dictIndex).toEqual(1);
+});
