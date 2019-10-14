@@ -25,7 +25,9 @@ const DictionariesOverview = () => {
 		},
 		{
 			Header: 'Number of items',
-			Cell: cell => <div>{cell.original.items.length}</div>,
+			Cell: cell => (
+				<div>{cell.original.items && cell.original.items.length}</div>
+			),
 			filterable: false
 		},
 		{

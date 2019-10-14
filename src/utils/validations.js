@@ -1,29 +1,20 @@
 // VALIDATIONS
-export const validateDictionaryItems = dictionaryItems => {
+export const validateDictionaryItems = dictionaryItems =>
 	dictionaryItems.map((originalItem, indexOriginal) => {
-		const isCycle = checkIsCycle(dictionaryItems, originalItem, indexOriginal);
-		if (!!isCycle) {
+		if (!!checkIsCycle(dictionaryItems, originalItem, indexOriginal))
 			return { ...originalItem, validation: 'Cycle' };
-		}
-		const isChain = checkIsChain(dictionaryItems, originalItem, indexOriginal);
-		if (!!isChain) {
+
+		if (!!checkIsChain(dictionaryItems, originalItem, indexOriginal))
 			return { ...originalItem, validation: 'Chain' };
-		}
-		const isDuplicate = checkIsDuplicate(
-			dictionaryItems,
-			originalItem,
-			indexOriginal
-		);
-		if (!!isDuplicate) {
+
+		if (!!checkIsDuplicate(dictionaryItems, originalItem, indexOriginal))
 			return { ...originalItem, validation: 'Duplicate' };
-		}
-		const isFork = checkIsFork(dictionaryItems, originalItem, indexOriginal);
-		if (!!isFork) {
+
+		if (!!checkIsFork(dictionaryItems, originalItem, indexOriginal))
 			return { ...originalItem, validation: 'Fork' };
-		}
+
 		return { ...originalItem, validation: 'OK' };
 	});
-};
 
 export const checkIsCycle = (dictionaryItems, originalItem, indexOriginal) =>
 	dictionaryItems.find(

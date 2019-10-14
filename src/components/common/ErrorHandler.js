@@ -21,13 +21,11 @@ const withErrorHandler = WrappedComponent =>
 					{!error ? (
 						<WrappedComponent {...this.props} />
 					) : (
-						<div className="alert-messages">
-							<div className="alert-message alert alert-danger">
-								<h6>{error.toString()}</h6>
-								<details className="details">
-									{errorInfo && errorInfo.componentStack}
-								</details>
-							</div>
+						<div className="alert alert-danger">
+							<h6>{error.toString()}</h6>
+							<details className="details">
+								{errorInfo && errorInfo.componentStack}
+							</details>
 						</div>
 					)}
 				</React.Fragment>

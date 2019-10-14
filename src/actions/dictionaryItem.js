@@ -2,7 +2,9 @@ import { setDictionaries } from './common';
 import {
 	addDictItemToArray,
 	removeDictItemFromArray,
-	editDictItemInArray
+	editDictItemInArray,
+	createNewDictionaries,
+	findDictIndexByName
 } from '../utils';
 import { validateDictionaryItems } from '../utils/validations';
 
@@ -15,21 +17,23 @@ const updateDictionariesWithItem = (
 	const { dictionaries, dictionarySelectedName } = store.state;
 	if (!dictionarySelectedName) return;
 
-	const dictionarySelectedIndex = dictionaries.findIndex(
-		dictionary => dictionary.name === dictionarySelectedName
+	const dictionarySelectedIndex = findDictIndexByName(
+		dictionaries,
+		dictionarySelectedName
 	);
 	const { name, items } = dictionaries[dictionarySelectedIndex];
 
-	const dictionaryItems = arrMethod(items, dictionaryItem, index);
-	const dictionaryItemsValidated = validateDictionaryItems(dictionaryItems);
+	const dictionaryItemsNew = arrMethod(items, dictionaryItem, index);
+	console.log(dictionaryItemsNew, ' ===== dictionaryItemsNew with index');
 
-	const dictionaryNew = {
+	const dictionaryItemsValidated = validateDictionaryItems(dictionaryItemsNew);
+	const newDictionaries = createNewDictionaries(
 		name,
-		items: dictionaryItemsValidated
-	};
-
-	const newDictionaries = [...dictionaries];
-	newDictionaries[dictionarySelectedIndex] = dictionaryNew;
+		dictionaryItemsValidated,
+		dictionaries,
+		dictionarySelectedIndex
+	);
+	console.log(newDictionaries, ' ===== newDictionaries');
 
 	setDictionaries(store, newDictionaries);
 };
@@ -42,6 +46,11 @@ export const editDictionaryItem = (store, dictionaryItem, index) => {
 	updateDictionariesWithItem(store, dictionaryItem, editDictItemInArray, index);
 };
 
-export const removeDictionaryItem = (store, dictionaryItem) => {
-	updateDictionariesWithItem(store, dictionaryItem, removeDictItemFromArray);
+export const removeDictionaryItem = (store, dictionaryItem, index) => {
+	updateDictionariesWithItem(
+		store,
+		dictionaryItem,
+		removeDictItemFromArray,
+		index
+	);
 };

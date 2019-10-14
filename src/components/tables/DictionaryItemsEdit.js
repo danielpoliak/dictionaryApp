@@ -20,9 +20,7 @@ const DictionariesItemsEdit = () => {
 	useEffect(() => {
 		const dictionaryItems = getDictionaryItemsFromDictionaryArr(
 			dictionaries,
-			'name',
-			dictionarySelectedName,
-			'items'
+			dictionarySelectedName
 		);
 		setDataUpdates(dictionaryItems);
 		setDictionaryItems(dictionaryItems);
@@ -56,12 +54,14 @@ const DictionariesItemsEdit = () => {
 		},
 		{
 			Header: 'Validations',
-			filterable: false
-			// Cell: cell => createActionsCell(cell)
+			accessor: 'validation',
+			Cell: cell => validationsCell(cell)
 		}
 	];
 
 	const onDictionaryItemChange = (cell, value, isDiscard) => {
+		console.log('on change hould not appear, siabed');
+
 		const cellIndex = cell.index;
 		const newDataUpdates = [...dataUpdates];
 		const newDataUpdatesCell = isDiscard
@@ -90,23 +90,28 @@ const DictionariesItemsEdit = () => {
 		);
 	};
 
+	const validationsCell = cell => dataUpdates[cell.index][cell.column.id];
+
 	const createActionsCell = cell => {
 		const cellItem = dataUpdates[cell.index];
-		// const isUdated = cellItem.isUpdated;
+		const isUpdated = cellItem.isUpdated;
 		return (
 			<div>
 				<i
-					className="fa fa-trash"
-					onClick={e => removeDictionaryItem(cellItem)}
-				/>
-				{/* TODO add shadow style when !isUpdated else active black style */}
-				<i
-					className="fa fa-undo"
-					onClick={e => onDictionaryItemChange(cell, '', true)}
+					className="fa fa-trash active"
+					onClick={e => removeDictionaryItem(cellItem, cell.index)}
 				/>
 				<i
-					className="fa fa-check"
-					onClick={e => editDictionaryItem(cellItem, cell.index)}
+					className={`fa fa-undo ${isUpdated ? 'active' : 'disabled'}`}
+					onClick={e => {
+						isUpdated && onDictionaryItemChange(cell, '', true);
+					}}
+				/>
+				<i
+					className={`fa fa-check ${isUpdated ? 'active' : 'disabled'}`}
+					onClick={e => {
+						isUpdated && editDictionaryItem(cellItem, cell.index);
+					}}
 				/>
 			</div>
 		);
