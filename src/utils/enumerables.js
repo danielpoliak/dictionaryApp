@@ -1,5 +1,5 @@
 const enums = {
-	subviews: ['Overview', 'Edit']
+	subviews: ['Dictionaries Overview', 'Edit Dictionary']
 };
 
 export default enums;
