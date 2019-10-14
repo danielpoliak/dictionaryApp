@@ -1,15 +1,7 @@
 import React from 'react';
 
 const Input = props => {
-	const {
-		value,
-		onChange,
-		placeholder,
-		onKeyPress
-		// isError,
-		// erroMessage
-	} = props;
-	// TODO erorrstyle message
+	const { value, onChange, placeholder, onKeyPress } = props;
 	return (
 		<div className="input-controls">
 			<input
