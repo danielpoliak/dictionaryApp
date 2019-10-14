@@ -18,7 +18,7 @@ const Select = props => {
 		<div>
 			<h4 className="select-title">Select dictionary</h4>
 			<select
-				className="select-edit"
+				className="select-dictionary"
 				value={dictionarySelected}
 				onChange={onDictionarySelectChange}
 			>

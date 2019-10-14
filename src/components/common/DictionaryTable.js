@@ -30,7 +30,7 @@ const DictionaryTable = props => {
 				className={'cell-center-vertical -striped -highlight'}
 				columns={columns}
 				filterable
-				pageSize={pageSize}
+				defaultPageSize={pageSize}
 			/>
 			<h4 className="form-title">{formTitle}</h4>
 			<div className="form-bottom">

@@ -26,7 +26,7 @@ export const getDictionaryItemsFromDictionaryArr = (
 	return dictionarySelected ? dictionarySelected.items : [];
 };
 
-export const getPageSizeRoundToFive = size => Math.ceil(size / 5) * 5;
+export const getPageSizeRoundToFive = size => Math.ceil(size / 5) * 5 || 5;
 
 export const createNewDictionaries = (
 	name,

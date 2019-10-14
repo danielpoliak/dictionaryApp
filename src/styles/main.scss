@@ -37,7 +37,8 @@
 	}
 }
 
-select {
+.select-dictionary {
+	margin-bottom: 1.5rem;
 	border-color: rgba(1, 107, 132, 0.4);
 	font-size: 0.9rem;
 	display: block;
@@ -53,10 +54,6 @@ select {
 	border: 1px solid #ced4da;
 	border-radius: 0.25rem;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.select-edit {
-	margin-bottom: 1.5rem;
 }
 
 .select-title {
