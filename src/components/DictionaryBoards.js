@@ -1,7 +1,7 @@
 import React from 'react';
 import useGlobal from '../store';
-import DictionariesOverview from '../components/tables/DictionariesOverview';
-import DictionaryItemsEdit from '../components/tables/DictionaryItemsEdit';
+import DictionariesOverview from './views/DictionariesOverview';
+import DictionaryItemsEdit from './views/DictionaryItemsEdit';
 import withErrorHandler from '../components/common/ErrorHandler';
 
 const DictionaryBoards = () => {

@@ -8,19 +8,20 @@
  */
 export const validateDictionaryItems = dictionaryItems =>
 	dictionaryItems.map((originalItem, indexOriginal) => {
+		const { domain, range } = originalItem;
 		if (!!checkIsCycle(dictionaryItems, originalItem, indexOriginal))
-			return { ...originalItem, validation: 'Cycle' };
+			return { domain, range, validation: 'Cycle' };
 
 		if (!!checkIsChain(dictionaryItems, originalItem, indexOriginal))
-			return { ...originalItem, validation: 'Chain' };
+			return { domain, range, validation: 'Chain' };
 
 		if (!!checkIsDuplicate(dictionaryItems, originalItem, indexOriginal))
-			return { ...originalItem, validation: 'Duplicate' };
+			return { domain, range, validation: 'Duplicate' };
 
 		if (!!checkIsFork(dictionaryItems, originalItem, indexOriginal))
-			return { ...originalItem, validation: 'Fork' };
+			return { domain, range, validation: 'Fork' };
 
-		return { ...originalItem, validation: 'OK' };
+		return { domain, range, validation: 'OK' };
 	});
 
 export const checkIsCycle = (dictionaryItems, originalItem, indexOriginal) =>

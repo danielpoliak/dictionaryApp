@@ -63,7 +63,6 @@ const DictionariesOverview = () => {
 
 	const addNewDictionary = () => {
 		const isDuplicate = !!findDuplicateDictionary(dictionaries, dictionaryName);
-		// TODO show some kind of error message for duplicate name
 		if (isDuplicate) {
 			return;
 		} else {
@@ -79,6 +78,7 @@ const DictionariesOverview = () => {
 				columns={dictionariesTableColumns}
 				inputFirstValue={dictionaryName}
 				inputFirstPlaceholder={'Name'}
+				formTitle={'Add new dictionary'}
 				inputFirstHandleOnKeyPress={handleOnKeyPress}
 				inputFirstOnChange={setDictionaryName}
 				btnOnClick={addNewDictionary}

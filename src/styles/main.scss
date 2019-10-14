@@ -12,8 +12,10 @@
 .Subview {
 	display: flex;
 	justify-content: space-between;
-	width: 25%;
+	width: 15%;
+	margin-bottom: 1rem;
 	p {
+		font-size: 1.2em;
 		cursor: pointer;
 		margin-right: 0.9em;
 		padding-right: 0.25em;
@@ -51,6 +53,16 @@ select {
 	border: 1px solid #ced4da;
 	border-radius: 0.25rem;
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.select-edit {
+	margin-bottom: 1.5rem;
+}
+
+.select-title {
+	margin-bottom: 0.2rem;
+	margin-top: 0;
+	text-transform: uppercase;
 }
 
 .alert {
@@ -95,10 +107,14 @@ select {
 	}
 }
 
+.form-title {
+	margin-bottom: 0.2rem;
+	margin-top: 2rem;
+	text-transform: uppercase;
+}
+
 .form-bottom {
 	display: flex;
-	padding-top: 0.5em;
-
 	.btn {
 		border: 1px solid transparent;
 		border-radius: 0.25rem;

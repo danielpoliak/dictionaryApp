@@ -18,11 +18,9 @@ const DictionaryTable = props => {
 		inputSecondValue,
 		inputSecondPlaceholder,
 		inputSecondHandleOnKeyPress,
-		inputSecondOnChange
-		// isError,
-		// erroMessage
+		inputSecondOnChange,
+		formTitle
 	} = props;
-	// TODO erorrstyle message
 
 	const pageSize = getPageSizeRoundToFive(data.length);
 	return (
@@ -34,6 +32,7 @@ const DictionaryTable = props => {
 				filterable
 				pageSize={pageSize}
 			/>
+			<h4 className="form-title">{formTitle}</h4>
 			<div className="form-bottom">
 				<Input
 					value={inputFirstValue}

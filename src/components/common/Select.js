@@ -15,9 +15,16 @@ const Select = props => {
 	const onDictionarySelectChange = e => onChangeSelect(e.target.value);
 
 	return (
-		<select value={dictionarySelected} onChange={onDictionarySelectChange}>
-			{renderOptions()}
-		</select>
+		<div>
+			<h4 className="select-title">Select dictionary</h4>
+			<select
+				className="select-edit"
+				value={dictionarySelected}
+				onChange={onDictionarySelectChange}
+			>
+				{renderOptions()}
+			</select>
+		</div>
 	);
 };
 

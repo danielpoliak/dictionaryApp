@@ -107,11 +107,22 @@ const DictionariesItemsEdit = () => {
 				<i
 					className={`fa fa-check ${isUpdated ? 'active' : 'disabled'}`}
 					onClick={e => {
-						isUpdated && editDictionaryItem(cellItem, cell.index);
+						isUpdated && onEditDictionaryItem(cellItem, cell.index);
 					}}
 				/>
 			</div>
 		);
+	};
+
+	const onEditDictionaryItem = (cellItem, cellIndex) => {
+		const newDataUpdates = [...dataUpdates];
+		const newDataUpdatesCell = {
+			...dataUpdates[cellIndex],
+			isUpdated: false
+		};
+		newDataUpdates[cellIndex] = newDataUpdatesCell;
+		setDataUpdates(newDataUpdates);
+		editDictionaryItem(cellItem, cellIndex);
 	};
 
 	const handleOnKeyPress = e => {
@@ -126,6 +137,7 @@ const DictionariesItemsEdit = () => {
 		setRange('');
 		addDictionaryItem({ domain, range });
 	};
+
 	return (
 		<div>
 			<Select
@@ -142,6 +154,7 @@ const DictionariesItemsEdit = () => {
 				inputFirstOnChange={setDomain}
 				btnOnClick={addNewDictionaryItem}
 				inputSecondValue={range}
+				formTitle={'Add new dictionary item'}
 				inputSecondPlaceholder={'Range'}
 				inputSecondHandleOnKeyPress={handleOnKeyPress}
 				inputSecondOnChange={setRange}
