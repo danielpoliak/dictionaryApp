@@ -22,9 +22,8 @@ const updateDictionariesWithItem = (
 		dictionarySelectedName
 	);
 	const { name, items } = dictionaries[dictionarySelectedIndex];
-
+	
 	const dictionaryItemsNew = arrMethod(items, dictionaryItem, index);
-	console.log(dictionaryItemsNew, ' ===== dictionaryItemsNew with index');
 
 	const dictionaryItemsValidated = validateDictionaryItems(dictionaryItemsNew);
 	const newDictionaries = createNewDictionaries(
