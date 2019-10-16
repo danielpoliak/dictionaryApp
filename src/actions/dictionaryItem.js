@@ -33,7 +33,6 @@ const updateDictionariesWithItem = (
 		dictionaries,
 		dictionarySelectedIndex
 	);
-	console.log(newDictionaries, ' ===== newDictionaries');
 
 	setDictionaries(store, newDictionaries);
 };
