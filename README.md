@@ -1,4 +1,4 @@
-## Available Scripts
+## Playground
 
 ### `npm install`
 
